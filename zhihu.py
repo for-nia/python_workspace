@@ -4,13 +4,24 @@ import requests
 import re
 import time
 headers_base = {
-'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-'Accept-Encoding': 'gzip, deflate, sdch',
-'Accept-Language': 'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2',
-'Connection': 'keep-alive',
-'Host': 'www.zhihu.com',
-'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36', 
-'Referer': 'http://www.zhihu.com/',
+#'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+#'Accept-Encoding': 'gzip, deflate, sdch',
+#'Accept-Language': 'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2',
+#'Connection': 'keep-alive',
+#'Host': 'www.zhihu.com',
+#'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36', 
+#'Referer': 'http://www.zhihu.com/'
+
+'Accept':'*/*',
+'Accept-Encoding':'gzip, deflate',
+'Accept-Language':'en,zh-CN;q=0.8,zh;q=0.6',
+'Connection':'keep-alive',
+'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
+'Host':'www.zhihu.com',
+'Origin':'http://www.zhihu.com',
+'Referer':'http://www.zhihu.com/?next=%2Ftopic',
+'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
+'X-Requested-With':'XMLHttpRequest'
 }
 url='http://www.zhihu.com'
 login_data={
@@ -24,10 +35,11 @@ session=requests.session()
 response=session.get(url,headers=headers_base)
 content=response.content
 xsrf=re.search(pattern,content)
-login_data['_xsrf']=xsrf.group(1)
+login_data['_xsrf']=xsrf.group(1).encode('utf-8')
 print xsrf.group(1)
-capcha_url='http://www.zhihu.com/captcha.gif?r=%d&type-login&lang=cn'%(time.time()*1000)
-capcha=session.get(capcha_url,stream=True)
+capcha_url='http://www.zhihu.com/captcha.gif?r=%d&type=login&lang=cn'%(time.time()*1000)
+print capcha_url
+capcha=session.get(capcha_url,headers=headers_base,stream=True)
 f=open('capcha.gif','wb')
 f.write(capcha.content)
 f.close()
@@ -46,6 +58,7 @@ print login_data
 url_login='http://www.zhihu.com/login/email'
 rep=session.post(url_login,data=login_data,headers=headers_base)
 print rep.status_code
+print rep.content
 mcookies=rep.cookies
 my_url='http://www.zhihu.com/people/fornia/followers'
 my_rep=session.get(my_url,headers=headers_base,cookies=mcookies)
