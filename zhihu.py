@@ -4,6 +4,8 @@ import requests
 import re
 import time
 import Image
+import login_data
+
 headers_base = {
 	'Accept-Encoding':'gzip, deflate',
 	'Accept-Language':'en,zh-CN;q=0.8,zh;q=0.6',
@@ -17,7 +19,7 @@ headers_base = {
 url='https://www.zhihu.com'
 login_data={
         'email':'663693083@qq.com',
-        'password':'year1234.',
+        'password':'*******',
         'remember_me':'true',
 	#	'captcha_type':'cn'
         }
@@ -68,7 +70,7 @@ rep=session.post(url_login,data=login_data,headers=headers_base,verify=False)
 print rep.status_code
 print rep.content
 mcookies=rep.cookies
-my_url='https://www.zhihu.com/people/fornia/followers'
+my_url='https://www.zhihu.com/people/fornia/followees'
 session.cookies=mcookies
 my_rep=session.get(my_url,headers=headers_base,verify=False)
 #print my_rep.content
