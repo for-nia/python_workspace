@@ -2,7 +2,7 @@
 
 login_data={
     'email':'663693083@qq.com',
-    'password':'year1234.',
+    'password':'*****',
     'remember_me':'true'
     }
 headers_base = {
