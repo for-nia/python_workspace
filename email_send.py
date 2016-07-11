@@ -14,7 +14,7 @@ message['Subject']=subject
 
 s=smtplib.SMTP()
 s.connect('smtp.163.com',25)
-s.login('forniafu@163.com','hello2world')
+s.login('forniafu@163.com','******')
 s.sendmail(sender,receive,message.as_string())
 s.close()
 
