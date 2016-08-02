@@ -4,6 +4,8 @@ import requests
 import re
 import time
 import Image
+import login_data
+
 headers_base = {
 	'Accept-Encoding':'gzip, deflate',
 	'Accept-Language':'en,zh-CN;q=0.8,zh;q=0.6',
@@ -17,7 +19,7 @@ headers_base = {
 url='https://www.zhihu.com'
 login_data={
         'email':'663693083@qq.com',
-        'password':'year1234.',
+        'password':'*******',
         'remember_me':'true',
 	#	'captcha_type':'cn'
         }
