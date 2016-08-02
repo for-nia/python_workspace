@@ -68,7 +68,7 @@ rep=session.post(url_login,data=login_data,headers=headers_base,verify=False)
 print rep.status_code
 print rep.content
 mcookies=rep.cookies
-my_url='https://www.zhihu.com/people/fornia/followers'
+my_url='https://www.zhihu.com/'
 session.cookies=mcookies
 my_rep=session.get(my_url,headers=headers_base,verify=False)
 #print my_rep.content
